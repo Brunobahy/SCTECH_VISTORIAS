@@ -7,23 +7,49 @@ namespace AutoCheck.ConsoleApp.models
         public int QuantidadeEixos { get; set; }
         public double CapacidadeCargaToneladas { get; set; }
 
-        public Caminhao(
-            string marca,
-            string modelo,
-            int ano, double km,
-            int quantidadeeixos,
-            int capacidadecargatonelada)
-            : base(marca, modelo, ano, km)
+        public Caminhao(): base()
         {
-            this.QuantidadeEixos = quantidadeeixos;
-            this.CapacidadeCargaToneladas = capacidadecargatonelada;
+            while (true)
+            {
+                Console.Write("Quantidade de EIXOS: ");
+                bool validaQuantidade = int.TryParse(Console.ReadLine(),out int qtdEixo);
+                if(validaQuantidade && qtdEixo > 1)
+                {
+                    this.QuantidadeEixos = qtdEixo;
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("QUANTIDADE INVALIDA");
+                }
+            }
+            while (true)
+            {
+                Console.Write("Capacidade de Carga em Toneladas: ");
+                bool validaQuantidade = int.TryParse(Console.ReadLine(),out int qtdCarga);
+                if(validaQuantidade && qtdCarga > 0)
+                {
+                    this.CapacidadeCargaToneladas = qtdCarga;
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("CAPACIDADE INVALIDA");
+                }
+            }
+            foreach (string item in ObterChecklistObrigatorio())
+            {
+                this.AdicionarItemVistoriado(item);
+            }
         }
         public override List<string> ObterChecklistObrigatorio()
         {
-            return new List<string>
-           {
-               "Tacógrafo", "Sistema de Freios a Ar", "Trava e Lona da Caçamba"
-           };
+
+           List<string> checklist = base.ObterChecklistObrigatorio();
+           
+           checklist.AddRange(new List<string>{"Tacógrafo", "Sistema de Freios a Ar", "Trava e Lona da Caçamba"});
+           return checklist;
+
         }
 
     }

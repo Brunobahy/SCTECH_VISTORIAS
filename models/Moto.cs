@@ -19,7 +19,7 @@ namespace AutoCheck.ConsoleApp.models
                 }
                 else
                 {
-                    Console.Write("QUANTIDADE INVALIDA");
+                    Console.WriteLine("QUANTIDADE INVALIDA");
 
                 }
 
@@ -34,10 +34,13 @@ namespace AutoCheck.ConsoleApp.models
 
         public override List<string> ObterChecklistObrigatorio()
         {
-            return new List<string>
+            List<string> checklist = base.ObterChecklistObrigatorio();
+
+            checklist.AddRange( new List<string>
             {
                 "Kit Transmissão/Corrente", "Manetes de Freio/Embreagem", "Pezinho Lateral"
-            };
+            });
+            return checklist;
         }
 
     }

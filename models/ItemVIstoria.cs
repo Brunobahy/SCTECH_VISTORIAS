@@ -10,11 +10,13 @@ namespace AutoCheck.ConsoleApp.models
     public ItemVIstoria(string nome)
         {
             DefineNome(nome);
+            Console.WriteLine("*************************************");
             Console.WriteLine($"Avaliando item: {nome}");
             Console.WriteLine("Digite o Status da vistoria: ");
-            Console.WriteLine("1) Bom \n 2) Regular \n 3) Ruim");
+            Console.WriteLine(" 1) Bom \n 2) Regular \n 3) Ruim");
             Console.Write("Status: ");
             DefineStatus(Console.ReadLine());
+            Console.WriteLine("*************************************");
 
         }
 

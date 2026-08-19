@@ -6,23 +6,41 @@ namespace AutoCheck.ConsoleApp.models
     {
         public int QuantidadePortas { get; set; }
 
-        public Carro(
-            string marca,
-            string modelo,
-            int ano,
-            double km,
-            int quantidadePortas
-        ) : base(marca, modelo, ano, km)
+        public Carro() : base()
         {
-            this.QuantidadePortas = quantidadePortas;
+            while (true)
+            {
+                Console.Write("Quantidade de PORTAS: ");
+                bool validaResposta = int.TryParse(Console.ReadLine(), out int quantidadePortas);
+                if (validaResposta && quantidadePortas > 1)
+                {
+                    this.QuantidadePortas = quantidadePortas;
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("QUANTIDADE INVALIDA");
+
+                }
+
+            }
+
+            foreach (string item in ObterChecklistObrigatorio())
+            {
+                this.AdicionarItemVistoriado(item);
+            }
         }
-        
+
         public override List<string> ObterChecklistObrigatorio()
         {
-            return new List<string>
+
+            List<string> checklist = base.ObterChecklistObrigatorio();
+            checklist.AddRange(new List<string>
             {
                  "Estepe e Macaco", "Triângulo de Sinalização", "Ar Condicionado Funcional"
-            };
+            });
+
+            return checklist;
         }
 
     }
