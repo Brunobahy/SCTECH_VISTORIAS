@@ -1,7 +1,12 @@
 using AutoCheck.ConsoleApp.models;
 
 
-Dictionary<string, string> manutencoes = new Dictionary<string, string>
+namespace AutoCheck.ConsoleApp.models
+{
+    public static class Relatorio
+    {
+
+        private static Dictionary<string, string> manutencoes = new Dictionary<string, string>
     {
         { "Estepe e Macaco", "Substituir ou reparar os equipamentos ausentes/danificados." },
         { "Triângulo de Sinalização", "Repor equipamento obrigatório ausente/danificado." },
@@ -18,28 +23,27 @@ Dictionary<string, string> manutencoes = new Dictionary<string, string>
     };
 
 
+        public static void RelatoriaVistorias()
+        {
 
-void RelatoriaVistorias(List<Veiculo> veiculosVistoriados)
-{
 
+            if (Cadastro.VeiculosVistoriados.Count < 1)
+            {
+                Console.WriteLine("Nenhuma vistoria realizada até o momento");
+                return;
+            }
+            Console.WriteLine("===================================================================");
+            Console.WriteLine("             VISTORIA .NET - MOTOR DE VISTORIA                    ");
+            Console.WriteLine("===================================================================");
 
-    if (veiculosVistoriados.Count < 1)
-    {
-        Console.WriteLine("Nenhuma vistoria realizada até o momento");
-        return;
-    }
-    Console.WriteLine("===================================================================");
-    Console.WriteLine("             VISTORIA .NET - MOTOR DE VISTORIA                    ");
-    Console.WriteLine("===================================================================");
+            int index = 0;
+            foreach (Veiculo veiculoAtual in Cadastro.VeiculosVistoriados)
+            {
+                index++;
 
-    int index = 0;
-    foreach (Veiculo veiculoAtual in veiculosVistoriados)
-    {
-        index++;
+                Console.WriteLine($"""
 
-        Console.WriteLine($"""
-
-        [{index}/{veiculosVistoriados.Count}] PROCESSANDO VISTORIA
+        [{index}/{Cadastro.VeiculosVistoriados.Count}] PROCESSANDO VISTORIA
         -------------------------------------------------------------------
         > DADOS DO VEÍCULO:
         - Tipo: {veiculoAtual.GetType().Name}
@@ -47,111 +51,114 @@ void RelatoriaVistorias(List<Veiculo> veiculosVistoriados)
         - Ano: {veiculoAtual.Ano} | Quilometragem: {veiculoAtual.Quilometragem:N0} km
         """);
 
-        if (veiculoAtual is Carro carro)
-        {
-            Console.WriteLine($"- Atributo Específico: {carro.QuantidadePortas} Portas");
+                if (veiculoAtual is Carro carro)
+                {
+                    Console.WriteLine($"- Atributo Específico: {carro.QuantidadePortas} Portas");
 
-        }
-        else if (veiculoAtual is Moto moto)
-        {
-            Console.WriteLine($"- Atributo Específico: {moto.Cilindradas} cc");
+                }
+                else if (veiculoAtual is Moto moto)
+                {
+                    Console.WriteLine($"- Atributo Específico: {moto.Cilindradas} cc");
 
-        }
-        else if (veiculoAtual is Caminhao caminhao)
-        {
-            Console.WriteLine($"- Atributo Específico: Capacidade de carga:{caminhao.CapacidadeCargaToneladas} T | {caminhao.QuantidadeEixos} Eixos");
+                }
+                else if (veiculoAtual is Caminhao caminhao)
+                {
+                    Console.WriteLine($"- Atributo Específico: Capacidade de carga:{caminhao.CapacidadeCargaToneladas} T | {caminhao.QuantidadeEixos} Eixos");
 
-        }
+                }
 
-        Console.WriteLine($"\n> AVALIAÇÃO DOS ITENS INSPECIONADOS ({veiculoAtual.VistoriasRealizadas.Count} ITENS):");
+                Console.WriteLine($"\n> AVALIAÇÃO DOS ITENS INSPECIONADOS ({veiculoAtual.VistoriasRealizadas.Count} ITENS):");
 
-        int totalPontos = 0;
-        int maxPontos = veiculoAtual.VistoriasRealizadas.Count * 10;
-        List<string> itensRegular = new List<string>();
-        List<string> itensRuim = new List<string>();
-        foreach (var item in veiculoAtual.VistoriasRealizadas)
-        {
-            if (item.Status == "Bom")
-            {
-                totalPontos += 10;
-                Console.ForegroundColor = ConsoleColor.Blue;
-                Console.WriteLine($"    [OK] {item.Nome} ---------- Status: {item.Status} (10 pts)");
-                Console.ResetColor();
-            }
+                int totalPontos = 0;
+                int maxPontos = veiculoAtual.VistoriasRealizadas.Count * 10;
+                List<string> itensRegular = new List<string>();
+                List<string> itensRuim = new List<string>();
+                foreach (var item in veiculoAtual.VistoriasRealizadas)
+                {
+                    if (item.Status == "Bom")
+                    {
+                        totalPontos += 10;
+                        Console.ForegroundColor = ConsoleColor.Blue;
+                        Console.WriteLine($"    [OK] {item.Nome} ---------- Status: {item.Status} (10 pts)");
+                        Console.ResetColor();
+                    }
 
-            else if (item.Status == "Regular")
-            {
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                totalPontos += 5;
-                itensRegular.Add(item.Nome);
-                Console.WriteLine($"    [ ! ] {item.Nome} ------- Status: {item.Status} (5 pts)");
-                Console.ResetColor();
-            }
-            else
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                itensRuim.Add(item.Nome);
-                Console.WriteLine($"    [ X ] {item.Nome} ------- Status: {item.Status} (0 pts)");
-                Console.ResetColor();
-            }
-        }
+                    else if (item.Status == "Regular")
+                    {
+                        Console.ForegroundColor = ConsoleColor.Yellow;
+                        totalPontos += 5;
+                        itensRegular.Add(item.Nome);
+                        Console.WriteLine($"    [ ! ] {item.Nome} ------- Status: {item.Status} (5 pts)");
+                        Console.ResetColor();
+                    }
+                    else
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        itensRuim.Add(item.Nome);
+                        Console.WriteLine($"    [ X ] {item.Nome} ------- Status: {item.Status} (0 pts)");
+                        Console.ResetColor();
+                    }
+                }
 
-        double porcentagem = (double)totalPontos * 100 / maxPontos;
-        Console.WriteLine($"""
+                double porcentagem = (double)totalPontos * 100 / maxPontos;
+                Console.WriteLine($"""
 
         > RESUMO DA PONTUAÇÃO:
             - Pontuação Atingida: {totalPontos} de {maxPontos} pontos possíveis
             - Percentual de Aprovação: {porcentagem:F2}%
         """);
-        if (porcentagem >= 90)
-        {
-            Console.ForegroundColor = ConsoleColor.Blue;
-            Console.WriteLine("     - Classificação Final: [ APROVADO COM EXCELENCIA ]");
-            Console.ResetColor();
-        }
-        else if (porcentagem >= 60)
-        {
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine("     - Classificação Final: [ APROVADO COM APONTAMENTOS ]");
-            Console.ResetColor();
-        }
-        else
-        {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("     - Classificação Final: [ Reprovado na Vistoria]");
-            Console.ResetColor();
-        }
+                if (porcentagem >= 90)
+                {
+                    Console.ForegroundColor = ConsoleColor.Blue;
+                    Console.WriteLine("     - Classificação Final: [ APROVADO COM EXCELENCIA ]");
+                    Console.ResetColor();
+                }
+                else if (porcentagem >= 60)
+                {
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine("     - Classificação Final: [ APROVADO COM APONTAMENTOS ]");
+                    Console.ResetColor();
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("     - Classificação Final: [ Reprovado na Vistoria]");
+                    Console.ResetColor();
+                }
 
-        Console.WriteLine($"""
+                Console.WriteLine($"""
 
         > RELATÓRIO DE MANUTENÇÃO E RECOMENDAÇÕES DA OFICINA:
 
         🔴 ITENS CRÍTICOS / REPROVADOS (AÇÃO IMEDIATA):
 
         """);
-        foreach (var item in itensRuim)
-        {
-            Console.ForegroundColor = ConsoleColor.Red;
-            if (manutencoes.ContainsKey(item))
-            {
-                Console.WriteLine($"- {item}: {manutencoes[item]}");
+                foreach (var item in itensRuim)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    if (manutencoes.ContainsKey(item))
+                    {
+                        Console.WriteLine($"- {item}: {manutencoes[item]}");
+                    }
+                }
+                Console.ResetColor();
+                Console.WriteLine("\n🟡 ITENS DE ATENÇÃO (REVISÃO PREVENTIVA):\n");
+
+                foreach (var item in itensRegular)
+                {
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    if (manutencoes.ContainsKey(item))
+                    {
+                        Console.WriteLine($"- {item}: {manutencoes[item]}");
+                    }
+                }
+                Console.ResetColor();
+
+                Console.WriteLine("-------------------------------------------------------------------");
+                Console.Write("Aperte enter para passar: ");
+                Console.ReadLine();
             }
         }
-        Console.ResetColor();
-        Console.WriteLine("\n🟡 ITENS DE ATENÇÃO (REVISÃO PREVENTIVA):\n");
-
-        foreach (var item in itensRegular)
-        {
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            if (manutencoes.ContainsKey(item))
-            {
-                Console.WriteLine($"- {item}: {manutencoes[item]}");
-            }
-        }
-        Console.ResetColor();
-
-        Console.WriteLine("-------------------------------------------------------------------");
-        Console.Write("Aperte enter para passar: ");
-        Console.ReadLine();
     }
 }
+
