@@ -36,12 +36,12 @@ namespace AutoCheck.ConsoleApp.models
         {
             List<string> checklist = base.ObterChecklistObrigatorio();
 
-            checklist.AddRange( new List<string>
+            checklist.AddRange(new List<string>
             {
                 "Kit Transmissão/Corrente", "Manetes de Freio/Embreagem", "Pezinho Lateral"
             });
             return checklist;
         }
-
+        
     }
 }

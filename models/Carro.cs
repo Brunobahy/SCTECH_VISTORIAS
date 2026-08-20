@@ -5,7 +5,6 @@ namespace AutoCheck.ConsoleApp.models
     public class Carro : Veiculo
     {
         public int QuantidadePortas { get; set; }
-        public Relatorio Relatorio { get; set; }
 
         public Carro() : base()
         {
@@ -44,6 +43,8 @@ namespace AutoCheck.ConsoleApp.models
 
             return checklist;
         }
+       
+
 
     }
 

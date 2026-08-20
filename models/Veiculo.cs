@@ -27,21 +27,22 @@ namespace AutoCheck.ConsoleApp.models
             while (true)
             {
                 Console.Write("Qual o ANO do veiculo: ");
-                bool validaResposta = int.TryParse(Console.ReadLine(),out int ano);
+                bool validaResposta = int.TryParse(Console.ReadLine(), out int ano);
                 if (validaResposta && ano < 2026 && ano > 1884)
                 {
                     this.Ano = ano;
                     break;
-                } else
+                }
+                else
                 {
                     Console.WriteLine("ANO INVALIDO");
                 }
-                
+
             }
             while (true)
             {
                 Console.Write("Qual a QUILOMETRAGEM do veiculo: ");
-                bool validaResposta = double.TryParse(Console.ReadLine(),out double km);
+                bool validaResposta = double.TryParse(Console.ReadLine(), out double km);
                 if (validaResposta && km > 0)
                 {
                     this.Quilometragem = km;
@@ -50,9 +51,9 @@ namespace AutoCheck.ConsoleApp.models
                 else
                 {
                     Console.WriteLine("QUILOMETRAGEM INVALIDA");
-                    
+
                 }
-                
+
             }
         }
         // Método AdicionarItemVistoriado(string nome, string status);
