@@ -1,11 +1,29 @@
 ﻿using AutoCheck.ConsoleApp.models;
 
 
+Dictionary<string, string> manutencoes = new Dictionary<string, string>
+    {
+        { "Estepe e Macaco", "Substituir ou reparar os equipamentos ausentes/danificados." },
+        { "Triângulo de Sinalização", "Repor equipamento obrigatório ausente/danificado." },
+        { "Ar Condicionado Funcional", "Realizar manutenção no sistema de climatização e verificar funcionamento." },
+        { "Tacógrafo", "Verificar, calibrar ou reparar o tacógrafo conforme necessário." },
+        { "Sistema de Freios a Ar", "Inspecionar o sistema pneumático e reparar possíveis vazamentos ou falhas." },
+        { "Trava e Lona da Caçamba", "Reparar ou substituir trava e lona danificadas, garantindo a correta fixação da carga." },
+        { "Kit Transmissão/Corrente", "Ajustar, lubrificar ou substituir componentes desgastados do sistema de transmissão." },
+        { "Manetes de Freio/Embreagem", "Regular ou substituir os manetes que apresentarem desgaste ou funcionamento inadequado." },
+        { "Pezinho Lateral", "Verificar fixação e substituir o componente caso esteja danificado ou instável." },
+        { "Nível de Óleo do Motor", "Completar ou substituir o óleo do motor conforme a necessidade de manutenção." },
+        { "Bateria e Sistema Elétrico", "Verificar a bateria, conexões e componentes elétricos, reparando possíveis falhas." },
+        { "Documentação Regularizada", "Regularizar documentos vencidos ou pendentes antes da liberação do veículo." }
+    };
+
+
 bool executar = true;
 List<Veiculo> veiculosVistoriados = new List<Veiculo>();
 Console.WriteLine("===================================================================");
 Console.WriteLine("BEM VINDO AO SISTEMA DE VISTORIAS");
 Console.WriteLine("===================================================================\n");
+
 
 while (executar)
 {
@@ -44,7 +62,6 @@ while (executar)
 
 
 }
-;
 
 
 void RealizarVistoria()
@@ -90,22 +107,25 @@ void RealizarVistoria()
 }
 
 
+
 void RelatoriaVistorias()
 {
+
+
     if (veiculosVistoriados.Count < 1)
     {
         Console.WriteLine("Nenhuma vistoria realizada até o momento");
         return;
     }
-    ;
     Console.WriteLine("===================================================================");
-    Console.WriteLine("AUTOCHECK .NET - MOTOR DE VISTORIA");
+    Console.WriteLine("             VISTORIA .NET - MOTOR DE VISTORIA                    ");
     Console.WriteLine("===================================================================");
 
     int index = 0;
     foreach (Veiculo veiculoAtual in veiculosVistoriados)
     {
         index++;
+
         Console.WriteLine($"""
 
         [{index}/{veiculosVistoriados.Count}] PROCESSANDO VISTORIA
@@ -121,12 +141,12 @@ void RelatoriaVistorias()
             Console.WriteLine($"- Atributo Específico: {carro.QuantidadePortas} Portas");
 
         }
-        if (veiculoAtual is Moto moto)
+        else if (veiculoAtual is Moto moto)
         {
             Console.WriteLine($"- Atributo Específico: {moto.Cilindradas} cc");
 
         }
-        if (veiculoAtual is Caminhao caminhao)
+        else if (veiculoAtual is Caminhao caminhao)
         {
             Console.WriteLine($"- Atributo Específico: Capacidade de carga:{caminhao.CapacidadeCargaToneladas} T | {caminhao.QuantidadeEixos} Eixos");
 
@@ -164,24 +184,31 @@ void RelatoriaVistorias()
                 Console.ResetColor();
             }
         }
-        int porcentagem = totalPontos * 100 / maxPontos;
+
+        double porcentagem = (double)totalPontos * 100 / maxPontos;
         Console.WriteLine($"""
 
         > RESUMO DA PONTUAÇÃO:
             - Pontuação Atingida: {totalPontos} de {maxPontos} pontos possíveis
-            - Percentual de Aprovação: {porcentagem}%
+            - Percentual de Aprovação: {porcentagem:F2}%
         """);
         if (porcentagem >= 90)
         {
+            Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine("     - Classificação Final: [ APROVADO COM EXCELENCIA ]");
+            Console.ResetColor();
         }
         else if (porcentagem >= 60)
         {
+            Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("     - Classificação Final: [ APROVADO COM APONTAMENTOS ]");
+            Console.ResetColor();
         }
         else
         {
+            Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("     - Classificação Final: [ Reprovado na Vistoria]");
+            Console.ResetColor();
         }
 
         Console.WriteLine($"""
@@ -194,24 +221,26 @@ void RelatoriaVistorias()
         foreach (var item in itensRuim)
         {
             Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine($"{item}: Repor equipamento obrigatório ausente/danificado.");
+            if (manutencoes.ContainsKey(item))
+            {
+                Console.WriteLine($"- {item}: {manutencoes[item]}");
+            }
         }
         Console.ResetColor();
         Console.WriteLine("\n🟡 ITENS DE ATENÇÃO (REVISÃO PREVENTIVA):\n");
-        
+
         foreach (var item in itensRegular)
         {
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine($"{item}: Exigem revisão preventiva.");
-        };
+            if (manutencoes.ContainsKey(item))
+            {
+                Console.WriteLine($"- {item}: {manutencoes[item]}");
+            }
+        }
         Console.ResetColor();
 
         Console.WriteLine("-------------------------------------------------------------------");
         Console.Write("Aperte enter para passar: ");
         Console.ReadLine();
     }
-
-
-
-
 }
