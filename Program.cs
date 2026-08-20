@@ -1,7 +1,21 @@
 ﻿using AutoCheck.ConsoleApp.models;
 
 
-
+Dictionary<string, string> manutencoes = new Dictionary<string, string>
+    {
+        { "Estepe e Macaco", "Substituir ou reparar os equipamentos ausentes/danificados." },
+        { "Triângulo de Sinalização", "Repor equipamento obrigatório ausente/danificado." },
+        { "Ar Condicionado Funcional", "Realizar manutenção no sistema de climatização e verificar funcionamento." },
+        { "Tacógrafo", "Verificar, calibrar ou reparar o tacógrafo conforme necessário." },
+        { "Sistema de Freios a Ar", "Inspecionar o sistema pneumático e reparar possíveis vazamentos ou falhas." },
+        { "Trava e Lona da Caçamba", "Reparar ou substituir trava e lona danificadas, garantindo a correta fixação da carga." },
+        { "Kit Transmissão/Corrente", "Ajustar, lubrificar ou substituir componentes desgastados do sistema de transmissão." },
+        { "Manetes de Freio/Embreagem", "Regular ou substituir os manetes que apresentarem desgaste ou funcionamento inadequado." },
+        { "Pezinho Lateral", "Verificar fixação e substituir o componente caso esteja danificado ou instável." },
+        { "Nível de Óleo do Motor", "Completar ou substituir o óleo do motor conforme a necessidade de manutenção." },
+        { "Bateria e Sistema Elétrico", "Verificar a bateria, conexões e componentes elétricos, reparando possíveis falhas." },
+        { "Documentação Regularizada", "Regularizar documentos vencidos ou pendentes antes da liberação do veículo." }
+    };
 
 
 bool executar = true;

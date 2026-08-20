@@ -11,7 +11,7 @@ namespace AutoCheck.ConsoleApp.models
         public double porcentagem { get; set; }
         public Dictionary<string, string> Manutencoes { get; set; }
 
-        public Relatorio(Veiculo veiculo) : base(veiculo.Marca, veiculo.Modelo, veiculo.Ano, veiculo.Quilometragem)
+        public Relatorio(Veiculo veiculo)
         {
             MaxPontos = VistoriasRealizadas.Count * 10;
             Manutencoes = new Dictionary<string, string> {
@@ -42,7 +42,7 @@ namespace AutoCheck.ConsoleApp.models
         - Ano: {Ano} | Quilometragem: {Quilometragem:N0} km
         - Atributo Específico: {string.Join(" | ", atributosEspecificos)}
 
-        > AVALIAÇÃO DOS ITENS INSPECIONADOS (5 ITENS):
+        > AVALIAÇÃO DOS ITENS INSPECIONADOS ({VistoriasRealizadas.Count} ITENS):
         """);
             foreach (var item in VistoriasRealizadas)
             {
