@@ -47,6 +47,7 @@ namespace AutoCheck.ConsoleApp.models
         -------------------------------------------------------------------
         > DADOS DO VEÍCULO:
         - Tipo: {veiculoAtual.GetType().Name}
+        - Marca {veiculoAtual.Marca}
         - Modelo: {veiculoAtual.Modelo}
         - Ano: {veiculoAtual.Ano} | Quilometragem: {veiculoAtual.Quilometragem:N0} km
         """);
